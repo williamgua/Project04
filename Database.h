@@ -5,11 +5,11 @@
 
 typedef struct _Database
 {
-	CSG* CSGtb[SIZE];
-	SNAP* SNAPtb[SIZE];
-	CP* CPtb[SIZE];
-	CR* CRtb[SIZE];
-	CDH* CDHtb[SIZE];
+	CSG CSGtb[SIZE];
+	SNAP SNAPtb[SIZE];
+	CP CPtb[SIZE];
+	CR CRtb[SIZE];
+	CDH CDHtb[SIZE];
 }*Database;
 
 Database Database_new();
