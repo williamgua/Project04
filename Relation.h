@@ -8,6 +8,7 @@ typedef struct Course_StudentID_Grade {
 	char course[5];
 	int studentId;
 	char grade[2];
+	CSG next;
 } *CSG;
 
 typedef struct StudentID_Name_Address_Phone {
@@ -15,22 +16,26 @@ typedef struct StudentID_Name_Address_Phone {
 	char name[15];
 	char address[15];
 	char phone[9];
+	SNAP next;
 } *SNAP;
 
 typedef struct Course_Prerequisite {
 	char course[5];
 	char prereq[5];
+	CP next;
 } *CP;
 
 typedef struct Course_Room {
 	char course[5];
 	char room[15];
+	CR next;
 } *CR;
 
 typedef struct Course_Day_Hour {
 	char course[5];
 	char day[2];
 	char hour[4];
+	CDH next;
 } *CDH;
 
 extern CSG CSG_new(char* course, int studentId, char* grade[]);
