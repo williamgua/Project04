@@ -17,4 +17,3 @@ Database Database_new();
 int hash(int n);
 int charToInt(char* str);
 
-

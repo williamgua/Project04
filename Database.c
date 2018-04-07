@@ -6,7 +6,7 @@ Database Database_new() {
 }
 
 int hash(int n) {
-    return n%1000;
+    return n%101;
 }
 
 int charToInt(char* str) {
