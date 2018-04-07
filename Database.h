@@ -10,4 +10,11 @@ typedef struct _Database
 	CP* CPtb[SIZE];
 	CR* CRtb[SIZE];
 	CDH* CDHtb[SIZE];
-}Database;
+}*Database;
+
+Database Database_new();
+
+int hash(int n);
+int charToInt(char* str);
+
+
