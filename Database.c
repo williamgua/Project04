@@ -15,3 +15,11 @@ int charToInt(char* str) {
         out = out + (int)str[i];
     }
 }
+
+void insertCSG(CSG *csg, Database *d){
+	int index = 
+}
+void insertSNAP(SNAP *snap, Database *d);
+void insertCP(CP *cp, Database *d );
+void insertCR (CR *cr, Database *d);
+void insertCDH (CDH *cdh, Database *d); 
