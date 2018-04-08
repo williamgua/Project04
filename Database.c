@@ -60,9 +60,9 @@ CSG lookupCSG(CSG csg, Database d) {
         return NULL;
     }
     else {
-        for(CSG iter = d->CSGtb[index]; iter !=NULL; iter=iter->next){
-            if (CSG_equal(csg,iter) ==1){
-                resultList[i] = iter;
+        for(CSG it = d->CSGtb[index]; it !=NULL; it=it->next){
+            if (CSG_equal(csg,it) ==1){
+                resultList[i] = it;
                 i++;
             }
         }
