@@ -38,7 +38,7 @@ typedef struct Course_Day_Hour {
 	struct Course_Day_Hour *next;
 } *CDH;
 
-extern CSG CSG_new(char* course, int studentId, char* grade[]);
+extern CSG CSG_new(char* course, int studentId, char* grade);
 extern SNAP SNAP_new(int studentId, char* name, char* address, char* phone);
 extern CP CP_new(char* course, char* prereq);
 extern CR CR_new(char* course, char* room);

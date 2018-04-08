@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Relations.h"
+#include "Relation.h"
 
 CSG CSG_new(char course[5], int studentId, char grade[2]) {
 	CSG csg = (CSG)malloc(sizeof(CSG));
