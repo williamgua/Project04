@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "Relations.h"
+#include "Relation.h"
 
 #define SIZE 100
 
