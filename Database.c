@@ -77,13 +77,10 @@ CSG lookupCSG(CSG csg, Database d) {
 
 void print_CSG_DB(Database d) {
 	for(int i=0; i<SIZE; i++) {
-		if(d->CSGtb[i] != NULL) {
-			prinf("%s %d %s", d->CSGtb[i]->course, d->CSGtb[i]->studentID, d->CSGtb[i]->grade);
-			d->CSGtb[i]->next != NULL
-			while(temp != NULL) {
-				prinf("%s %d %s", temp->course, temp->studentID, temp->grade);
-				temp = temp->next;
-			}
-		}
+        CSG temp = d->CSGtb[i];
+        while(temp != NULL) {
+            prinf("%s %d %s", temp->course, temp->studentID, temp->grade);
+            temp = temp->next;
+        }
 	}
 }
