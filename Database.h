@@ -29,8 +29,8 @@ void deleteCP(CP cp, Database d);
 void deleteCR (CR cr, Database d);
 void deleteCDH (CDH cdh, Database d);
 
-CSG* lookupCSG(CSG csg, Database d);
-SNAP* lookupSNAP(SNAP snap, Database d);
-CP* lookupCP(CP cp, Database d);
-CR* lookupCR (CR cr, Database d);
-CDH* lookupCDH (CDH cdh, Database d);
+CSG lookupCSG(CSG csg, Database d);
+SNAP lookupSNAP(SNAP snap, Database d);
+CP lookupCP(CP cp, Database d);
+CR lookupCR (CR cr, Database d);
+CDH lookupCDH (CDH cdh, Database d);

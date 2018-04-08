@@ -1,7 +1,7 @@
 #include "Database.h"
 
 Database Database_new() {
-    Database db = (Database)malloc(1*sizeof(Database));
+    Database db = (Database)malloc(sizeof(Database));
     return db;
 }
 
@@ -16,7 +16,7 @@ int charToInt(char* str) {
     }
 }
 
-void insertCSG(CSG *csg, Database *d){
+void insertCSG(CSG csg, Database d){
 	int index = hash(charToInt(csg->course));
 
 	if (d->CSGtb[index] == NULL){
@@ -26,10 +26,10 @@ void insertCSG(CSG *csg, Database *d){
         d->CSGtb[index] = csg;
 	}
 }
-void insertSNAP(SNAP *snap, Database *d);
-void insertCP(CP *cp, Database *d );
-void insertCR (CR *cr, Database *d);
-void insertCDH (CDH *cdh, Database *d); 
+void insertSNAP(SNAP snap, Database d);
+void insertCP(CP cp, Database d);
+void insertCR (CR cr, Database d);
+void insertCDH (CDH cdh, Database d); 
 
 void deleteCSG (CSG csg, Database d){
     int index = hash(charToInt(csg->course));
@@ -51,9 +51,9 @@ void deleteCSG (CSG csg, Database d){
 
     }
 
-CSG* lookupCSG (CSG csg, Database d) {
+CSG lookupCSG(CSG csg, Database d) {
     int index = hash(charToInt(csg->course));
-    CSG* resultList = (CSG*)malloc(sizeof(CSG*));
+    CSG* resultList = (CSG*)calloc(5, sizeof(CSG));
     int i = 0;
 
     if(d->CSGtb[index] == NULL){
