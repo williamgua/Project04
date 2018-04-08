@@ -56,7 +56,7 @@ void deleteCSG (CSG csg, Database d){
 
     }
 
-CSG lookupCSG(CSG csg, Database d) {
+CSG* lookupCSG(CSG csg, Database d) {
     int index = hash(charToInt(csg->course));
     CSG* resultList = (CSG*)calloc(5, sizeof(CSG));
     int i = 0;
