@@ -27,11 +27,21 @@ void insertCSG(CSG csg, Database d){
 	if (d->CSGtb[index] == NULL){
 		d->CSGtb[index] = csg;
 	}else{
+        CSG newCSG = 
 		csg->next = d->CSGtb[index];
         d->CSGtb[index] = csg;
 	}
 }
-void insertSNAP(SNAP snap, Database d);
+void insertSNAP(SNAP snap, Database d){
+    int index = hash(charToInt(snap->course));
+
+    if (d->SNAPtb[index] == NULL){
+        d->SNAPtb[index] = snap;
+    }else{
+        snap->next = d->SNAPtb[index];
+        d->SNAPtb[index] = snap;
+    }
+}
 void insertCP(CP cp, Database d);
 void insertCR (CR cr, Database d);
 void insertCDH (CDH cdh, Database d); 
