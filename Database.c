@@ -19,6 +19,7 @@ int charToInt(char* str) {
     for (int i=0; i<5; i++) {
         out = out + (int)str[i];
     }
+    return out;
 }
 
 void insertCSG(CSG csg, Database d){
@@ -46,50 +47,50 @@ void insertCP(CP cp, Database d);
 void insertCR (CR cr, Database d);
 void insertCDH (CDH cdh, Database d); 
 
-void deleteCSG (CSG csg, Database d){
-    int index = hash(charToInt(csg->course));
-    if (d->CSGtb[index] == NULL){
-        return;
-    }else{
+//void deleteCSG (CSG csg, Database d){
+//    int index = hash(charToInt(csg->course));
+//    if (d->CSGtb[index] == NULL){
+//        return;
+//    }else{
+//
+//        if(CDH_equal(d->CSGtb[index],csg) == 1){
+//            d->CSGtb[index] = d->CSGtb[index]->next;
+//        }
+//        else{
+//            CSG csgPtr = d->CSGtb[index]->next;
+//            while (CDH_equal(csgPtr, csg) == 0 && csgPtr->next != NULL){
+//                csgPtr = csgPtr->next;
+//            }
+//        }
+//        }
+//
+//
+//    }
 
-        if(CDH_equal(d->CSGtb[index],csg) == 1){
-            d->CSGtb[index] = d->CSGtb[index]->next;
-        }
-        else{
-            CSG csgPtr = d->CSGtb[index]->next;
-            while (CDH_equal(csgPtr, csg) == 0 && csgPtr->next != NULL){
-                csgPtr = csgPtr->next;
-            }
-        }
-        }
-
-
-    }
-
-CSG* lookupCSG(CSG csg, Database d) {
-    int index = hash(charToInt(csg->course));
-    CSG* resultList = (CSG*)calloc(5, sizeof(CSG));
-    int i = 0;
-
-    if(d->CSGtb[index] == NULL){
-        return NULL;
-    }
-    else {
-        for(CSG it = d->CSGtb[index]; it !=NULL; it=it->next){
-            if (CSG_equal(csg,it) ==1){
-                resultList[i] = it;
-                i++;
-            }
-        }
-    }
-    return resultList;
-}
+//CSG* lookupCSG(CSG csg, Database d) {
+//    int index = hash(charToInt(csg->course));
+//    CSG* resultList = (CSG*)calloc(5, sizeof(CSG));
+//    int i = 0;
+//
+//    if(d->CSGtb[index] == NULL){
+//        return NULL;
+//    }
+//    else {
+//        for(CSG it = d->CSGtb[index]; it !=NULL; it=it->next){
+//            if (CSG_equal(csg,it) ==1){
+//                resultList[i] = it;
+//                i++;
+//            }
+//        }
+//    }
+//    return resultList;
+//}
 
 void print_CSG_DB(Database d) {
 	for(int i=0; i<SIZE; i++) {
         CSG temp = d->CSGtb[i];
         while(temp != NULL) {
-            prinf("%s %d %s", temp->course, temp->studentID, temp->grade);
+            printf("%s %d %s", temp->course, temp->studentId, temp->grade);
             temp = temp->next;
         }
 	}

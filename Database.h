@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "Relations.h"
+#include "Relation.h"
 
 #define SIZE 100
 
@@ -34,3 +34,5 @@ SNAP lookupSNAP(SNAP snap, Database d);
 CP lookupCP(CP cp, Database d);
 CR lookupCR (CR cr, Database d);
 CDH lookupCDH (CDH cdh, Database d);
+
+void print_CSG_DB(Database d);
