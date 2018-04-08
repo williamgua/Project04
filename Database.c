@@ -2,16 +2,16 @@
 
 Database Database_new() {
     Database db = (Database)malloc(sizeof(Database));
-    db->CSGtb = (CSG*)calloc(SIZE, sizeof(CSG));
-    db->SNAPtb = (SNAP*)calloc(SIZE, sizeof(SNAP));
-    db->CPtb = (CP*)calloc(SIZE, sizeof(CP));
-    db->CRtb = (CR*)calloc(SIZE, sizeof(CR));
-    db->CDHtb = (CDH*)calloc(SIZE, sizeof(CDH));
+//    db->CSGtb = (CSG*)calloc(SIZE, sizeof(CSG));
+//    db->SNAPtb = (SNAP*)calloc(SIZE, sizeof(SNAP));
+//    db->CPtb = (CP*)calloc(SIZE, sizeof(CP));
+//    db->CRtb = (CR*)calloc(SIZE, sizeof(CR));
+//    db->CDHtb = (CDH*)calloc(SIZE, sizeof(CDH));
     return db;
 }
 
 int hash(int n) {
-    return n%101;
+    return n%1009;
 }
 
 int charToInt(char* str) {
@@ -23,8 +23,7 @@ int charToInt(char* str) {
 }
 
 void insertCSG(CSG csg, Database d){
-	int index = hash(charToInt(csg->course));
-
+	int index = hash(csg->studentId);
 	if (d->CSGtb[index] == NULL){
 		d->CSGtb[index] = csg;
 	}else{
@@ -78,10 +77,13 @@ void insertCDH (CDH cdh, Database d);
 
 void print_CSG_DB(Database d) {
 	for(int i=0; i<SIZE; i++) {
-        CSG temp = d->CSGtb[i];
-        while(temp != NULL) {
-            printf("%s %d %s", temp->course, temp->studentId, temp->grade);
-            temp = temp->next;
+        if(d->CSGtb[i] != NULL) {
+            CSG temp = (CSG)malloc(sizeof(CSG));
+            temp = d->CSGtb[i];
+            while(temp != NULL) {
+                printf("%s %d %s\n", temp->course, temp->studentId, temp->grade);
+                temp = temp->next;
+            }
         }
 	}
 }

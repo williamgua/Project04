@@ -9,5 +9,5 @@ int main() {
     insertCSG(CSG_new("CSC101", 12346, "B-"), test);
     insertCSG(CSG_new("CSC103", 12347, "B"), test);
 
-    print_CSG_DB(test);
+print_CSG_DB(test);
 }
