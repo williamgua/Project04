@@ -2,6 +2,11 @@
 
 Database Database_new() {
     Database db = (Database)malloc(sizeof(Database));
+    db->CSGtb = (CSG*)calloc(SIZE, sizeof(CSG));
+    db->SNAPtb = (SNAP*)calloc(SIZE, sizeof(SNAP));
+    db->CPtb = (CP*)calloc(SIZE, sizeof(CP));
+    db->CRtb = (CR*)calloc(SIZE, sizeof(CR));
+    db->CDHtb = (CDH*)calloc(SIZE, sizeof(CDH));
     return db;
 }
 
@@ -68,4 +73,17 @@ CSG lookupCSG(CSG csg, Database d) {
         }
     }
     return resultList;
+}
+
+void print_CSG_DB(Database d) {
+	for(int i=0; i<SIZE; i++) {
+		if(d->CSGtb[i] != NULL) {
+			prinf("%s %d %s", d->CSGtb[i]->course, d->CSGtb[i]->studentID, d->CSGtb[i]->grade);
+			d->CSGtb[i]->next != NULL
+			while(temp != NULL) {
+				prinf("%s %d %s", temp->course, temp->studentID, temp->grade);
+				temp = temp->next;
+			}
+		}
+	}
 }
