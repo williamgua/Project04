@@ -35,4 +35,4 @@ CP lookupCP(CP cp, Database d);
 CR lookupCR (CR cr, Database d);
 CDH lookupCDH (CDH cdh, Database d);
 
-void print_CSG_DB(Database d);
+void print_CSG(Database d);
