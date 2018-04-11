@@ -8,7 +8,7 @@
 typedef struct CSG *CSGLIST;
 typedef struct CSG {
     char Course[5];
-    char StudentId[10];
+    char StudentId[5];
     char Grade[2];
     CSGLIST next;
 } CSG;
@@ -17,7 +17,7 @@ typedef struct CSG {
 //studentid-name-address-phone
 typedef struct SNAP *SNAPLIST;
 typedef struct SNAP {
-    char StudentId[10];
+    char StudentId[5];
     char Name[15];
     char Address[15];
     char Phone[10];
