@@ -466,12 +466,12 @@ void print_CR(CRLIST* crlist){
 
 //Query
 //What grade did StudentName get in CourseName?
-void getGrade(char* name, char* course, Database db) {
-    SNAP* snap = lookup_SNAP(db, SNAP_new("*", name, "*", "*"));
+void getGrade(char* name, char* course, Database* db) {
+    SNAP** snap = lookup_SNAP(db, SNAP_new("*", name, "*", "*"));
     int i=0, j=0;
     while (i<1009 && snap[i] != NULL) {
         char* id = snap[i]->StudentId;
-        CSG* csg = lookup_CSG(db, CSG_new("*", id, "*"));
+        CSG** csg = lookup_CSG(db, CSG_new("*", id, "*"));
         while (j<1009 && csg[j] != NULL) {
             if (strcmp(csg[j]->Course, course) == 0) {
                 printf("%s %s\n", "Grade:", csg[j]->Grade);
@@ -483,26 +483,31 @@ void getGrade(char* name, char* course, Database db) {
     }
     free(snap);
 }
+
 //Where is StudentName at Time on Day?
-void getRoom(char* name, char* hour, char* day, Database db) {
-    SNAP* snap = lookup_SNAP(db, SNAP_new("*", name, "*", "*"));
+void getRoom(char* name, char* hour, char* day, Database* db) {
+    SNAP** snap = lookup_SNAP(db, SNAP_new("*", name, "*", "*"));
     int i=0, j=0, k=0, l=0;
     while (i<1009 && snap[i] != NULL) {
         char* id = snap[i]->StudentId;
-        CSG* csg = lookup_CSG(db, CSG_new("*", id, "*"));
+        CSG** csg = lookup_CSG(db, CSG_new("*", id, "*"));
         while (j<1009 && csg[j] != NULL) {
             char* course = csg[j]->Course;
-            CDH* cdh = lookup_CDH(db, CDH_new(course, "*", "*"));
+            CDH** cdh = lookup_CDH(db, CDH_new(course, "*", "*"));
             while (k<1009 && cdh[k] != NULL) {
                 if (strcmp(cdh[k]->Day, day)==0 && strcmp(cdh[k]->Hour, hour)==0) {
-                    CR* cr = lookup_CR(db, CR_new(course, "*"));
+                    CR** cr = lookup_CR(db, CR_new(course, "*"));
                     if (cr[0] != NULL)
                         printf("%s %s\n", "Room:", cr[l]->Room);
-                }
-            }
-        }
-    }
-}
+                }// first if
+                k++;
+            }//k
+            j++;
+        } //j
+        i++;
+    } //i
+    free(snap);
+} //getroom
 
 int main() {
     Database* new = Database_new();
@@ -513,7 +518,32 @@ int main() {
     insert_CSG(new,CSG_new("EE200", "22222", "B+"));
     insert_CSG(new,CSG_new("CS101", "33333", "A-"));
     insert_CSG(new,CSG_new("PH100", "67890", "C+"));
+    
+    insert_SNAP(new, SNAP_new("12345", "C.Brown", "12 Apple St.","555-1234"));
+    insert_SNAP(new, SNAP_new("67890", "L.Van Pelt", "34 Pear Ave.","555-5678"));
+    insert_SNAP(new, SNAP_new("22222", "P.Patty", "56 Grape Blvd.","555-9999"));
+    
+    insert_CP(new, CP_new("CS101", "CS100"));
+    insert_CP(new, CP_new("EE200", "EE005"));
+    insert_CP(new, CP_new("EE200", "CS100"));
+    insert_CP(new, CP_new("CS120", "CS101"));
+    insert_CP(new, CP_new("CS121", "CS120"));
+    insert_CP(new, CP_new("CS205", "CS101"));
+    insert_CP(new, CP_new("CS206", "CS121"));
+    insert_CP(new, CP_new("CS206", "CS205"));
+    
+    insert_CDH(new, CDH_new("CS101", "M", "9AM"));
+    insert_CDH(new, CDH_new("CS101", "W", "9AM"));
+    insert_CDH(new, CDH_new("CS101", "F", "9AM"));
+    insert_CDH(new, CDH_new("EE200", "Tu", "10AM"));
+    insert_CDH(new, CDH_new("EE200", "W", "1PM"));
+    insert_CDH(new, CDH_new("EE200", "Th", "10AM"));
+    
+    insert_CR(new, CR_new("CS101", "Turing Aud."));
+    insert_CR(new, CR_new("EE200", "25 Ohm Hall"));
+    insert_CR(new, CR_new("PH100", "Newton Lab."));
 
-    lookup_CSG(new, CSG_new("CSC101", "*", "*"));
-    return 1;
+//    lookup_CSG(new, CSG_new("CSC101", "*", "*"));
+    getGrade("C.Brown", "CS101", new);
+//    return 1;
 }

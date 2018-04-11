@@ -43,3 +43,5 @@ void print_SNAP(SNAPLIST* snaplist);
 void print_CP(CPLIST* cplist);
 void print_CDH(CDHLIST* cdhlist);
 void print_CR(CRLIST* crlist);
+
+void getGrade(char* name, char* course, Database* db);
