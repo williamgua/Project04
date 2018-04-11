@@ -7,6 +7,21 @@ Database* Database_new() {
     // memset(db->CPtb, 0, sizeof(db->CPtb));
     // memset(db->CRtb, 0, sizeof(db->CRtb));
     // memset(db->SNAPtb, 0, sizeof(db->SNAPtb));
+    for(int i=0; i<1009; i++) {
+        db->CSGtb[i] = NULL;
+    }
+    for(int i=0; i<1009; i++) {
+        db->CDHtb[i] = NULL;
+    }
+    for(int i=0; i<1009; i++) {
+        db->CPtb[i] = NULL;
+    }
+    for(int i=0; i<1009; i++) {
+        db->CRtb[i] = NULL;
+    }
+    for(int i=0; i<1009; i++) {
+        db->SNAPtb[i] = NULL;
+    }
     return db;
 }
 
@@ -22,60 +37,58 @@ int strToInt(char* input) {
     return ind;
 }
 
-// void insert_CSG(Database* D, CSG* tuple) {
-//     int index = hash(strToInt(tuple->StudentId));
-//     if(D->CSGtb[index] == NULL) {
-//         D->CSGtb[index] = tuple;
-//         printf("123\n");
-//     } 
-//     else if(!(strcmp(D->CSGtb[index]->Course, tuple->Course)==0 && strcmp(D->CSGtb[index]->StudentId, tuple->StudentId)==0 && strcmp(D->CSGtb[index]->Grade, tuple->Grade)==0)) {
-//         printf("234/n");
-//         CSG* currentHead = D->CSGtb[index];
-//         int match = 0;
-//         while(currentHead->next != NULL) {
-//             printf("345");
-//             if(strcmp(D->CSGtb[index]->Course, tuple->Course)==0 && strcmp(D->CSGtb[index]->StudentId, tuple->StudentId)==0 && strcmp(D->CSGtb[index]->Grade, tuple->Grade)==0) {
-//                 match = 1;
-//                 break;
-//             } else {
-//                 currentHead = currentHead->next;
-//                 printf("456");
-//             }
-//         }
-//         if(match == 0) {
-//             currentHead->next = tuple;
-//         }
-//     }
-// }
-
-void insert_CSG(Database* D, CSG* toInsert){
-    int index = hash(strToInt(toInsert->StudentId));
-    if (D->CSGtb[index] == NULL){
-        //Fresh, empty Bucket
-        D->CSGtb[index] = toInsert;
-        printf("123\n");
-    } else if (strcmp(D->CSGtb[index]->Course, toInsert->Course)==0&&strcmp(D->CSGtb[index]->StudentId, toInsert->StudentId)==0&&strcmp(D->CSGtb[index]->Grade, toInsert->Grade)==0){
-    } else{
-        printf("234\n");
+void insert_CSG(Database* D, CSG* tuple) {
+    int index = hash(strToInt(tuple->StudentId)); //hash on studentID
+    if(D->CSGtb[index] == NULL) {
+        D->CSGtb[index] = tuple; //if the bucket is empty, just insert
+    } 
+    //if the bucket is not empty, and if the first tuple in it is not a duplicate
+    else if(!(strcmp(D->CSGtb[index]->Course, tuple->Course)==0 && strcmp(D->CSGtb[index]->StudentId, tuple->StudentId)==0 && strcmp(D->CSGtb[index]->Grade, tuple->Grade)==0)) {
         CSG* currentHead = D->CSGtb[index];
-        int eq = 0;
-        // printf("%s\n", currentHead->next->Course);
-        while(currentHead!=NULL){ //currentHead should be NULL but it is not NULL??? CSG_new next NULL but doesn't work
-           printf("345\n");
-            if (strcmp(D->CSGtb[index]->Course, toInsert->Course)==0&&strcmp(D->CSGtb[index]->StudentId, toInsert->StudentId)==0&&strcmp(D->CSGtb[index]->Grade, toInsert->Grade)==0){
-                eq = 1;
+        int match = 0;
+        while(currentHead != NULL) {
+            //if a duplicate is found, terminate
+            if(strcmp(currentHead->Course, tuple->Course)==0 && strcmp(currentHead->StudentId, tuple->StudentId)==0 && strcmp(currentHead->Grade, tuple->Grade)==0) {
+                match = 1;
                 break;
-            }else{
-                currentHead = currentHead->next;
-                printf("456\n");
+            } else {
+                currentHead = currentHead->next; //until next is null
             }
         }
-        if(eq==0){
-            currentHead = toInsert;
-            printf("567\n");
+        if(match == 0) {
+            currentHead = tuple; //insert the tuple as the next of the last tuple in the bucket
         }
     }
 }
+
+// void insert_CSG(Database* D, CSG* toInsert){
+//     int index = hash(strToInt(toInsert->StudentId));
+//     if (D->CSGtb[index] == NULL){
+//         //Fresh, empty Bucket
+//         D->CSGtb[index] = toInsert;
+//         printf("123\n");
+//     } else if (strcmp(D->CSGtb[index]->Course, toInsert->Course)==0&&strcmp(D->CSGtb[index]->StudentId, toInsert->StudentId)==0&&strcmp(D->CSGtb[index]->Grade, toInsert->Grade)==0){
+//     } else{
+//         printf("234\n");
+//         CSG* currentHead = D->CSGtb[index];
+//         int eq = 0;
+//         // printf("%s\n", currentHead->next->Course);
+//         while(currentHead!=NULL){ //currentHead should be NULL but it is not NULL??? CSG_new next NULL but doesn't work
+//            printf("345\n");
+//             if (strcmp(D->CSGtb[index]->Course, toInsert->Course)==0&&strcmp(D->CSGtb[index]->StudentId, toInsert->StudentId)==0&&strcmp(D->CSGtb[index]->Grade, toInsert->Grade)==0){
+//                 eq = 1;
+//                 break;
+//             }else{
+//                 currentHead = currentHead->next;
+//                 printf("456\n");
+//             }
+//         }
+//         if(eq==0){
+//             currentHead = toInsert;
+//             printf("567\n");
+//         }
+//     }
+// }
 
 
 void insert_SNAP(Database* D, SNAP* tuple) {
@@ -86,7 +99,7 @@ void insert_SNAP(Database* D, SNAP* tuple) {
     else if(!(strcmp(D->SNAPtb[index]->StudentId, tuple->StudentId)==0 && strcmp(D->SNAPtb[index]->Name, tuple->Name)==0 && strcmp(D->SNAPtb[index]->Address, tuple->Address)==0 && strcmp(D->SNAPtb[index]->Phone, tuple->Phone)==0)) {
         SNAP* currentHead = D->SNAPtb[index];
         int match = 0;
-        while(currentHead->next != NULL) {
+        while(currentHead != NULL) {
             if(strcmp(currentHead->StudentId, tuple->StudentId)==0 && strcmp(currentHead->Name, tuple->Name)==0 && strcmp(currentHead->Address, tuple->Address)==0 && strcmp(currentHead->Phone, tuple->Phone)==0) {
                 match = 1;
                 break;
@@ -95,7 +108,7 @@ void insert_SNAP(Database* D, SNAP* tuple) {
             }
         }
         if(match == 0) {
-            currentHead->next = tuple;
+            currentHead = tuple;
         }
     }
 }
@@ -108,7 +121,7 @@ void insert_CP(Database* D, CP* tuple){
     else if(!(strcmp(D->CPtb[index]->Course, tuple->Course)==0 && strcmp(D->CPtb[index]->Prerequisite, tuple->Prerequisite)==0)) {
         CP* currentHead = D->CPtb[index];
         int match = 0;
-        while(currentHead->next != NULL) {
+        while(currentHead != NULL) {
             if(strcmp(currentHead->Course, tuple->Course)==0 && strcmp(currentHead->Prerequisite, tuple->Prerequisite)==0) {
                 match = 1;
                 break;
@@ -117,7 +130,7 @@ void insert_CP(Database* D, CP* tuple){
             }
         }
         if(match == 0) {
-            currentHead->next = tuple;
+            currentHead = tuple;
         }
     }
 }
@@ -130,7 +143,7 @@ void insert_CDH(Database* D, CDH* tuple){
     else if(!(strcmp(D->CDHtb[index]->Course, tuple->Course)==0 && strcmp(D->CDHtb[index]->Day, tuple->Day)==0 && strcmp(D->CDHtb[index]->Hour, tuple->Hour)==0)) {
         CDH* currentHead = D->CDHtb[index];
         int match = 0;
-        while(currentHead->next != NULL) {
+        while(currentHead != NULL) {
             if(strcmp(currentHead->Course, tuple->Course)==0 && strcmp(currentHead->Day, tuple->Day)==0 && strcmp(currentHead->Hour, tuple->Hour)==0) {
                 match = 1;
                 break;
@@ -139,7 +152,7 @@ void insert_CDH(Database* D, CDH* tuple){
             }
         }
         if(match == 0) {
-            currentHead->next = tuple;
+            currentHead = tuple;
         }
     }
 }
@@ -152,7 +165,7 @@ void insert_CR(Database* D, CR* tuple){
     else if(!(strcmp(D->CRtb[index]->Course, tuple->Course)==0 && strcmp(D->CRtb[index]->Room, tuple->Room)==0)) {
         CR* currentHead = D->CRtb[index];
         int match = 0;
-        while(currentHead->next != NULL) {
+        while(currentHead != NULL) {
             if(strcmp(currentHead->Course, tuple->Course)==0 && strcmp(currentHead->Room, tuple->Room)==0) {
                 match = 1;
                 break;
@@ -161,7 +174,7 @@ void insert_CR(Database* D, CR* tuple){
             }
         }
         if(match == 0) {
-            currentHead->next = tuple;
+            currentHead = tuple;
         }
     }
 }
@@ -453,16 +466,14 @@ void print_CR(CRLIST* crlist){
 
 int main() {
     Database* new = Database_new();
-    for(int i=0; i<1009; i++) {
-        new->CSGtb[i] = NULL;
-    }
-    insert_CSG(new,CSG_new("CS101", "12345", "A"));
-    // insert_CSG(new,CSG_new("CS101", "67890", "B"));
-    insert_CSG(new,CSG_new("EE200", "12345", "C"));
-    // insert_CSG(new,CSG_new("EE200", "22222", "B+"));
-    // insert_CSG(new,CSG_new("CS101", "33333", "A-"));
-    // insert_CSG(new,CSG_new("PH100", "67890", "C+"));
 
-    // print_CSG(lookup_CSG(new, CSG_new("CSC101", "*", "*")));
-    // return 1;
+    insert_CSG(new,CSG_new("CS101", "12345", "A"));
+    insert_CSG(new,CSG_new("CS101", "67890", "B"));
+    insert_CSG(new,CSG_new("EE200", "12345", "C"));
+    insert_CSG(new,CSG_new("EE200", "22222", "B+"));
+    insert_CSG(new,CSG_new("CS101", "33333", "A-"));
+    insert_CSG(new,CSG_new("PH100", "67890", "C+"));
+
+    lookup_CSG(new, CSG_new("CSC101", "*", "*"));
+    return 1;
 }
