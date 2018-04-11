@@ -451,6 +451,46 @@ void print_CR(CRLIST* crlist){
     }
 }
 
+//Query
+//What grade did StudentName get in CourseName?
+void getGrade(char* name, char* course, Database db) {
+    SNAP* snap = lookup_SNAP(db, SNAP_new("*", name, "*", "*"));
+    int i=0, j=0;
+    while (i<1009 && snap[i] != NULL) {
+        char* id = snap[i]->StudentId;
+        CSG* csg = lookup_CSG(db, CSG_new("*", id, "*"));
+        while (j<1009 && csg[j] != NULL) {
+            if (strcmp(csg[j]->Course, course) == 0) {
+                printf("%s %s\n", "Grade:", csg[j]->Grade);
+            }
+            j++;
+        }
+        free(csg);
+        i++;
+    }
+    free(snap);
+}
+//Where is StudentName at Time on Day?
+void getRoom(char* name, char* hour, char* day, Database db) {
+    SNAP* snap = lookup_SNAP(db, SNAP_new("*", name, "*", "*"));
+    int i=0, j=0, k=0, l=0;
+    while (i<1009 && snap[i] != NULL) {
+        char* id = snap[i]->StudentId;
+        CSG* csg = lookup_CSG(db, CSG_new("*", id, "*"));
+        while (j<1009 && csg[j] != NULL) {
+            char* course = csg[j]->Course;
+            CDH* cdh = lookup_CDH(db, CDH_new(course, "*", "*"));
+            while (k<1009 && cdh[k] != NULL) {
+                if (strcmp(cdh[k]->Day, day)==0 && strcmp(cdh[k]->Hour, hour)==0) {
+                    CR* cr = lookup_CR(db, CR_new(course, "*"));
+                    if (cr[0] != NULL)
+                        printf("%s %s\n", "Room:", cr[l]->Room);
+                }
+            }
+        }
+    }
+}
+
 int main() {
     Database* new = Database_new();
     for(int i=0; i<1009; i++) {
