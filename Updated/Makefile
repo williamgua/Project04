@@ -1,10 +1,11 @@
 CC=gcc
 CFLAGS = o
-FILES = expr.c parserRD.c parserTD.c parseTree.c calculator.c
-OUTPUT = expr
+OPTION = -std=c99 -Wall -Werror
+FILES = Tuple.c Database_new.c
+OUTPUT = out
 
 make : $(FILES)
-	$(CC) -$(CFLAGS) $(OUTPUT) $(FILES)
+	$(CC) -$(CFLAGS) $(OUTPUT) $(OPTION) $(FILES)
 
 run :
 	./$(OUTPUT)
@@ -13,6 +14,6 @@ clean :
 	rm $(OUTPUT)
 
 run-clean : $(FILES)
-	$(CC) -$(CFLAGS) $(OUTPUT) $(FILES)
+	$(CC) -$(CFLAGS) $(OUTPUT) $(OPTION) $(FILES)
 	./$(OUTPUT)
 	rm $(OUTPUT)
