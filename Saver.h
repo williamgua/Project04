@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include "Database.h"
 
-void importDB(char* fileName);
-void exportDB(char* fileName);
+extern void importDB(char* fileName);
+extern void exportDB(char* fileName);
 
 #endif
 
