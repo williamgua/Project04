@@ -2,11 +2,11 @@
 
 Database* Database_new() {
     Database* db = (Database*)malloc(sizeof(Database));
-    // memset(db->CSGtb, 0, sizeof(db->CSGtb));
-    // memset(db->CDHtb, 0, sizeof(db->CDHtb));
-    // memset(db->CPtb, 0, sizeof(db->CPtb));
-    // memset(db->CRtb, 0, sizeof(db->CRtb));
-    // memset(db->SNAPtb, 0, sizeof(db->SNAPtb));
+    memset(db->CSGtb, '\0', sizeof(db->CSGtb));
+    memset(db->CDHtb, '\0', sizeof(db->CDHtb));
+    memset(db->CPtb, '\0', sizeof(db->CPtb));
+    memset(db->CRtb, '\0', sizeof(db->CRtb));
+    memset(db->SNAPtb, '\0', sizeof(db->SNAPtb));
     for(int i=0; i<1009; i++) {
         db->CSGtb[i] = NULL;
     }
@@ -31,7 +31,7 @@ int hash(int input){
 
 int strToInt(char* input) {
     int ind = 0;
-    for(int i = 0; i < 6; i++) {
+    for(int i=0; i<6; i++) {
         ind += (int) input[i];
     }
     return ind;
@@ -298,96 +298,88 @@ void delete_CR(Database* D, CR* tuple){
 }
 
 /* Lookup functions */
-CSG** lookup_CSG(Database* D, CSG* toLookup){
-    //  int index = hash(stringToInt(toLookup->StudentId));
+CSG** lookup_CSG(Database* D, CSG* tuple){
     CSG** List = (CSG**)calloc(1009,sizeof(CSG*));
-    int i = 0;//index pointers in double pointer
-    for(int j = 0;j<1009;j++){
-        if(D->CSGtb[j]!=NULL){
-            for (CSG* temp =D->CSGtb[j]; temp != NULL; temp = temp->next){
-                if (equal_CSG(toLookup, temp)) {//If we've found the matching entry as temp's next
+    int i = 0;
+    for(int j=0; j<1009; j++) { //search all tuples in every bucket
+        if(D->CSGtb[j] != NULL) {
+            for(CSG* temp=D->CSGtb[j]; temp!=NULL; temp=temp->next) {
+                if(equal_CSG(temp, tuple)) { //if match, add to resulting list
                     List[i] = temp;
                     i++;
                 }
             }
         }
     }
-    if (List[0] == NULL) return NULL;
+    if(List[0] == NULL) return NULL;
     return List;
 }
 
-SNAP** lookup_SNAP(Database* D, SNAP* toLookup){
-    //int index = hash(stringToInt(toLookup->StudentId));
+SNAP** lookup_SNAP(Database* D, SNAP* tuple){
     SNAP** List = (SNAP**)calloc(1009,sizeof(SNAP*));
-    int i = 0;//index pointers in double pointer
-    for(int j = 0;j<1009;j++){
-        if(D->SNAPtb[j]!=NULL){
-
-            for (SNAP* temp = D->SNAPtb[j]; temp != NULL; temp = temp->next){
-                if (equal_SNAP(toLookup, temp)){//found matching entry as temp's next
+    int i = 0;
+    for(int j=0; j<1009; j++) {
+        if(D->SNAPtb[j] != NULL) {
+            for(SNAP* temp=D->SNAPtb[j]; temp!=NULL; temp=temp->next) {
+                if(equal_SNAP(temp, tuple)) {
                     List[i] = temp;
                     i++;
                 }
             }
         }
     }
-    if (List[0] == NULL) return NULL;
+    if(List[0] == NULL) return NULL;
     return List;
 }
 
-CP** lookup_CP(Database* D, CP* toLookup){
+CP** lookup_CP(Database* D, CP* tuple){
     CP** List = (CP**)calloc(1009,sizeof(CP*));
-    int i = 0;//index pointers in double pointer
-    for(int j = 0;j<1009;j++){
-        if(D->CPtb[j]!=NULL){
-            for (CP* temp = D->CPtb[j]; temp != NULL; temp = temp->next){
-                if (equal_CP(toLookup, temp)) {//If we've found the matching entry as temp's next
+    int i = 0;
+    for(int j=0; j<1009; j++) {
+        if(D->CPtb[j] != NULL) {
+            for(CP* temp=D->CPtb[j]; temp!=NULL; temp=temp->next) {
+                if(equal_CP(temp, tuple)) {
                     List[i] = temp;
                     i++;
                 }
             }
         }
     }
-    if (List[0] == NULL) return NULL;
+    if(List[0] == NULL) return NULL;
     return List;
 }
 
-CDH** lookup_CDH(Database* D, CDH* toLookup){
-    //int index = hash(stringToInt(toLookup->Course));
+CDH** lookup_CDH(Database* D, CDH* tuple){
     CDH** List = (CDH**)calloc(1009,sizeof(CDH*));
-    int i = 0;//index pointers in double pointer
-    for(int j = 0;j<1009;j++){
-        if(D->CDHtb[j]!=NULL){
-            for (CDH* temp =D->CDHtb[j]; temp != NULL; temp = temp->next){
-                if (equal_CDH(toLookup, temp)){//If we've found the matching entry as temp's next
+    int i = 0;
+    for(int j=0; j<1009; j++) {
+        if(D->CDHtb[j] != NULL) {
+            for(CDH* temp=D->CDHtb[j]; temp!=NULL; temp=temp->next) {
+                if(equal_CDH(temp, tuple)) {
                     List[i] = temp;
                     i++;
                 }
             }
         }
     }
-    if (List[0] == NULL) return NULL;
+    if(List[0] == NULL) return NULL;
     return List;
 }
 
-CR** lookup_CR(Database* D, CR* toLookup){
-    int i = 0;//index pointers in double pointer
+CR** lookup_CR(Database* D, CR* tuple){
     CR** List = (CR**)calloc(1009,sizeof(CR*));
-    for(i = 0; i<1009;i++){
-        List[i] = NULL;
-    }
-    for(int j = 0;j<1009;j++){
-        if(D->CRtb[j]!=NULL){
-            for (CR* temp = D->CRtb[j]; temp != NULL; temp = temp->next){
-                if (equal_CR(toLookup, temp)){//If we've found the matching entry as temp's next
-                    // printf("%s\n",temp->Course);
+    int i = 0;
+    for(int j=0; j<1009; j++) {
+        if(D->CRtb[j] != NULL) {
+            for(CR* temp=D->CRtb[j]; temp!=NULL; temp=temp->next) {
+                if(equal_CR(temp, tuple)) {
                     List[i] = temp;
                     i++;
                 }
             }
         }
     }
-    if (List[0] == NULL) return NULL;
+    if(List[0] == NULL) return NULL;
     return List;
 }
 
@@ -464,86 +456,27 @@ void print_CR(CRLIST* crlist){
     }
 }
 
-//Query
-//What grade did StudentName get in CourseName?
-void getGrade(char* name, char* course, Database* db) {
-    SNAP** snap = lookup_SNAP(db, SNAP_new("*", name, "*", "*"));
-    int i=0, j=0;
-    while (i<1009 && snap[i] != NULL) {
-        char* id = snap[i]->StudentId;
-        CSG** csg = lookup_CSG(db, CSG_new("*", id, "*"));
-        while (j<1009 && csg[j] != NULL) {
-            if (strcmp(csg[j]->Course, course) == 0) {
-                printf("%s %s\n", "Grade:", csg[j]->Grade);
-            }
-            j++;
-        }
-        free(csg);
-        i++;
-    }
-    free(snap);
-}
-
-//Where is StudentName at Time on Day?
-void getRoom(char* name, char* hour, char* day, Database* db) {
-    SNAP** snap = lookup_SNAP(db, SNAP_new("*", name, "*", "*"));
-    int i=0, j=0, k=0, l=0;
-    while (i<1009 && snap[i] != NULL) {
-        char* id = snap[i]->StudentId;
-        CSG** csg = lookup_CSG(db, CSG_new("*", id, "*"));
-        while (j<1009 && csg[j] != NULL) {
-            char* course = csg[j]->Course;
-            CDH** cdh = lookup_CDH(db, CDH_new(course, "*", "*"));
-            while (k<1009 && cdh[k] != NULL) {
-                if (strcmp(cdh[k]->Day, day)==0 && strcmp(cdh[k]->Hour, hour)==0) {
-                    CR** cr = lookup_CR(db, CR_new(course, "*"));
-                    if (cr[0] != NULL)
-                        printf("%s %s\n", "Room:", cr[l]->Room);
-                }// first if
-                k++;
-            }//k
-            j++;
-        } //j
-        i++;
-    } //i
-    free(snap);
-} //getroom
-
 int main() {
-    Database* new = Database_new();
+    CSG* csg = CSG_new("CS173", "24680", "A");
+    printf("%s %s %s\n", csg->Course, csg->StudentId, csg->Grade);
 
-    insert_CSG(new,CSG_new("CS101", "12345", "A"));
-    insert_CSG(new,CSG_new("CS101", "67890", "B"));
-    insert_CSG(new,CSG_new("EE200", "12345", "C"));
-    insert_CSG(new,CSG_new("EE200", "22222", "B+"));
-    insert_CSG(new,CSG_new("CS101", "33333", "A-"));
-    insert_CSG(new,CSG_new("PH100", "67890", "C+"));
-    
-    insert_SNAP(new, SNAP_new("12345", "C.Brown", "12 Apple St.","555-1234"));
-    insert_SNAP(new, SNAP_new("67890", "L.Van Pelt", "34 Pear Ave.","555-5678"));
-    insert_SNAP(new, SNAP_new("22222", "P.Patty", "56 Grape Blvd.","555-9999"));
-    
-    insert_CP(new, CP_new("CS101", "CS100"));
-    insert_CP(new, CP_new("EE200", "EE005"));
-    insert_CP(new, CP_new("EE200", "CS100"));
-    insert_CP(new, CP_new("CS120", "CS101"));
-    insert_CP(new, CP_new("CS121", "CS120"));
-    insert_CP(new, CP_new("CS205", "CS101"));
-    insert_CP(new, CP_new("CS206", "CS121"));
-    insert_CP(new, CP_new("CS206", "CS205"));
-    
-    insert_CDH(new, CDH_new("CS101", "M", "9AM"));
-    insert_CDH(new, CDH_new("CS101", "W", "9AM"));
-    insert_CDH(new, CDH_new("CS101", "F", "9AM"));
-    insert_CDH(new, CDH_new("EE200", "Tu", "10AM"));
-    insert_CDH(new, CDH_new("EE200", "W", "1PM"));
-    insert_CDH(new, CDH_new("EE200", "Th", "10AM"));
-    
-    insert_CR(new, CR_new("CS101", "Turing Aud."));
-    insert_CR(new, CR_new("EE200", "25 Ohm Hall"));
-    insert_CR(new, CR_new("PH100", "Newton Lab."));
 
-//    lookup_CSG(new, CSG_new("CSC101", "*", "*"));
-    getGrade("C.Brown", "CS101", new);
-//    return 1;
+    // Database* new = Database_new();
+
+    // insert_CSG(new,CSG_new("CS101", "12345", "A"));
+    // printf("%d %d\n", new->CSGtb[hash(strToInt("12345"))] == NULL, hash(strToInt("12345")));
+    // insert_CSG(new,CSG_new("CS101", "67890", "B"));
+    // insert_CSG(new,CSG_new("EE200", "12345", "C"));
+    // insert_CSG(new,CSG_new("EE200", "22222", "B+"));
+    // insert_CSG(new,CSG_new("CS101", "33333", "A-"));
+    // insert_CSG(new,CSG_new("PH100", "67890", "C+"));
+
+    // for(int i=0; i<1009; i++) {
+    //     if(new->CSGtb[i] != NULL) {
+    //         // printf("%s %d %s\n", new->CSGtb[i]->Course, i, new->CSGtb[i]->StudentId);
+    //         printf("%s %d\n", new->CSGtb[i]->Grade, i);
+    //     }
+    // }
+    // printf("%s", lookup_CSG(new, CSG_new("CSC101", "*", "*"))[0]->Grade);
+    return 1;
 }

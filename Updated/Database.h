@@ -2,11 +2,11 @@
 #include <stdlib.h>
 
 typedef struct Database{
-    CSGLIST CSGtb[1009];
-    SNAPLIST SNAPtb[1009];
-    CPLIST CPtb[1009];
-    CDHLIST CDHtb[1009];
-    CRLIST CRtb[1009];
+    CSG* CSGtb[1009];
+    SNAP* SNAPtb[1009];
+    CP* CPtb[1009];
+    CDH* CDHtb[1009];
+    CR* CRtb[1009];
 } Database;
 
 /* New database function */
@@ -43,5 +43,3 @@ void print_SNAP(SNAPLIST* snaplist);
 void print_CP(CPLIST* cplist);
 void print_CDH(CDHLIST* cdhlist);
 void print_CR(CRLIST* crlist);
-
-void getGrade(char* name, char* course, Database* db);
