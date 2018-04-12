@@ -4,7 +4,7 @@
 #include "Relation.h"
 
 CSG CSG_new(char course[5], int studentId, char grade[2]) {
-	CSG csg = (CSG)malloc(sizeof(CSG));
+	CSG csg = (CSG)calloc(1, sizeof(CSG));
   	strcpy(csg->course, course);
   	strcpy(csg->grade, grade);
   	csg->studentId = studentId;

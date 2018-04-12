@@ -17,11 +17,11 @@ int hash(int input);
 int strToInt (char* input);
 
 /* Insert functions */
-void insert_SNAP(Database* D, SNAP* toInsert);
-void insert_CSG(Database* D, CSG* toInsert);
-void insert_CP(Database* D, CP* toInsert);
-void insert_CDH(Database* D, CDH* toInsert);
-void insert_CR(Database* D, CR* toInsert);
+void insert_SNAP(Database* D, SNAP* tuple);
+void insert_CSG(Database* D, CSG* tuple);
+void insert_CP(Database* D, CP* tuple);
+void insert_CDH(Database* D, CDH* tuple);
+void insert_CR(Database* D, CR* tuple);
 
 /* Delete functions */
 void delete_SNAP(Database* D, SNAP* toDelete);

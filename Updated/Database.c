@@ -1,7 +1,7 @@
 #include "Database.h"
 
 Database* Database_new() {
-    Database* db = (Database*)malloc(sizeof(Database));
+    Database* db = (Database*)calloc(1,sizeof(Database));
     // memset(db->CSGtb, 0, sizeof(db->CSGtb));
     // memset(db->CDHtb, 0, sizeof(db->CDHtb));
     // memset(db->CPtb, 0, sizeof(db->CPtb));
@@ -38,7 +38,9 @@ int strToInt(char* input) {
 }
 
 void insert_CSG(Database* D, CSG* tuple) {
+    printf("%s\n", tuple->StudentId);
     int index = hash(strToInt(tuple->StudentId)); //hash on studentID
+    printf("%s %d %d\n",tuple->StudentId, index, strToInt(tuple->StudentId));
     if(D->CSGtb[index] == NULL) {
         D->CSGtb[index] = tuple; //if the bucket is empty, just insert
     } 
@@ -93,6 +95,7 @@ void insert_CSG(Database* D, CSG* tuple) {
 
 void insert_SNAP(Database* D, SNAP* tuple) {
     int index = hash(strToInt(tuple->StudentId));
+    printf("%d\n", index);
     if(D->SNAPtb[index] == NULL) {
         D->SNAPtb[index] = tuple;
     } 
@@ -509,6 +512,33 @@ void getRoom(char* name, char* hour, char* day, Database* db) {
     free(snap);
 } //getroom
 
+//Algebra
+//Selection σCourse=“CS101”(CSG)
+CSG** select_CSG(Database* db, char* course) {
+    CSG** csg = (CSG**)calloc(1009,sizeof(CSG*));
+    int index = 0;
+    for (int i=0; i<1009; i++) {
+        for (CSG* temp = db->CSGtb[i]; temp != NULL; temp = temp->next) {
+            if (strcmp(temp->Course, course)==0) {
+                csg[index] = temp;
+                index++;
+            }
+        }
+    }
+    return csg;
+}
+
+//Projection πStudentId
+void project_id(CSG** csg) {
+    printf("%s\n", "StudentId");
+    for(int i=0; i>1009; i++) {
+        printf("%s\n", csg[i]->StudentId);
+    }
+}
+
+//Join
+
+
 int main() {
     Database* new = Database_new();
 
@@ -519,31 +549,31 @@ int main() {
     insert_CSG(new,CSG_new("CS101", "33333", "A-"));
     insert_CSG(new,CSG_new("PH100", "67890", "C+"));
     
-    insert_SNAP(new, SNAP_new("12345", "C.Brown", "12 Apple St.","555-1234"));
-    insert_SNAP(new, SNAP_new("67890", "L.Van Pelt", "34 Pear Ave.","555-5678"));
-    insert_SNAP(new, SNAP_new("22222", "P.Patty", "56 Grape Blvd.","555-9999"));
-    
-    insert_CP(new, CP_new("CS101", "CS100"));
-    insert_CP(new, CP_new("EE200", "EE005"));
-    insert_CP(new, CP_new("EE200", "CS100"));
-    insert_CP(new, CP_new("CS120", "CS101"));
-    insert_CP(new, CP_new("CS121", "CS120"));
-    insert_CP(new, CP_new("CS205", "CS101"));
-    insert_CP(new, CP_new("CS206", "CS121"));
-    insert_CP(new, CP_new("CS206", "CS205"));
-    
-    insert_CDH(new, CDH_new("CS101", "M", "9AM"));
-    insert_CDH(new, CDH_new("CS101", "W", "9AM"));
-    insert_CDH(new, CDH_new("CS101", "F", "9AM"));
-    insert_CDH(new, CDH_new("EE200", "Tu", "10AM"));
-    insert_CDH(new, CDH_new("EE200", "W", "1PM"));
-    insert_CDH(new, CDH_new("EE200", "Th", "10AM"));
-    
-    insert_CR(new, CR_new("CS101", "Turing Aud."));
-    insert_CR(new, CR_new("EE200", "25 Ohm Hall"));
-    insert_CR(new, CR_new("PH100", "Newton Lab."));
+//    insert_SNAP(new, SNAP_new("12345", "C.Brown", "12 Apple St.","555-1234"));
+//    insert_SNAP(new, SNAP_new("67890", "L.Van Pelt", "34 Pear Ave.","555-5678"));
+//    insert_SNAP(new, SNAP_new("22222", "P.Patty", "56 Grape Blvd.","555-9999"));
+//    
+//    insert_CP(new, CP_new("CS101", "CS100"));
+//    insert_CP(new, CP_new("EE200", "EE005"));
+//    insert_CP(new, CP_new("EE200", "CS100"));
+//    insert_CP(new, CP_new("CS120", "CS101"));
+//    insert_CP(new, CP_new("CS121", "CS120"));
+//    insert_CP(new, CP_new("CS205", "CS101"));
+//    insert_CP(new, CP_new("CS206", "CS121"));
+//    insert_CP(new, CP_new("CS206", "CS205"));
+//    
+//    insert_CDH(new, CDH_new("CS101", "M", "9AM"));
+//    insert_CDH(new, CDH_new("CS101", "W", "9AM"));
+//    insert_CDH(new, CDH_new("CS101", "F", "9AM"));
+//    insert_CDH(new, CDH_new("EE200", "Tu", "10AM"));
+//    insert_CDH(new, CDH_new("EE200", "W", "1PM"));
+//    insert_CDH(new, CDH_new("EE200", "Th", "10AM"));
+//    
+//    insert_CR(new, CR_new("CS101", "Turing Aud."));
+//    insert_CR(new, CR_new("EE200", "25 Ohm Hall"));
+//    insert_CR(new, CR_new("PH100", "Newton Lab."));
 
-//    lookup_CSG(new, CSG_new("CSC101", "*", "*"));
-    getGrade("C.Brown", "CS101", new);
-//    return 1;
+    print_CSG(new->CSGtb);
+//    getGrade("C.Brown", "CS101", new);
+    return 1;
 }

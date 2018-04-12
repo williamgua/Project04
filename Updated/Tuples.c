@@ -41,7 +41,7 @@ int equal_CR(CR* c1, CR* c2){
 }
 
 CSG* CSG_new(char* Course, char* StudentId, char* Grade){
-    CSG* new = (CSG*)malloc(sizeof(CSG));
+    CSG* new = (CSG*)calloc(1,sizeof(CSG));
     strcpy(new->StudentId, StudentId);
     strcpy(new->Course, Course);
     strcpy(new->Grade, Grade);
