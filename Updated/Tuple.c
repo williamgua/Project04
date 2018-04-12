@@ -1,4 +1,4 @@
-#include "Tuples.h"
+#include "Tuple.h"
 
 
 int equal_CSG(CSG* c1, CSG* c2){
@@ -40,6 +40,24 @@ int equal_CR(CR* c1, CR* c2){
     return 1;
 }
 
+int equal_CRDH(CRDH* c1, CRDH* c2){
+    if(!(c1==NULL && c2==NULL)){
+        if((strcmp(c1->Course,c2->Course) == 0)&&(strcmp(c1->Day,c2->Day)== 0)&&(strcmp(c1->Hour,c2->Hour) == 0)&&(strcmp(c1->Room,c2->Room))==0) return 1;
+        if((strcmp(c1->Course,c2->Course) == 0)&&(strcmp(c1->Day,c2->Day) == 0)&&(strcmp(c1->Hour,"*") == 0)&&(strcmp(c1->Room,c2->Room))==0) return 1;
+        if((strcmp(c1->Course,c2->Course) == 0)&&(strcmp(c1->Hour,c2->Hour) == 0)&&(strcmp(c1->Day,"*") == 0)&&(strcmp(c1->Room,c2->Room))==0) return 1;
+        if((strcmp(c1->Day,c2->Day) == 0)&&(strcmp(c1->Hour,c2->Hour) == 0)&&(strcmp(c1->Course,"*") == 0)&&(strcmp(c1->Room,c2->Room))==0) return 1;
+        if((strcmp(c1->Course,c2->Course) == 0)&&(strcmp(c1->Hour,"*") == 0)&&(strcmp(c1->Day,"*") == 0)&&(strcmp(c1->Room,c2->Room))==0) return 1;
+        if((strcmp(c1->Course,"*") == 0)&&(strcmp(c1->Hour,"*") == 0)&&(strcmp(c1->Day,c2->Day) == 0)&&(strcmp(c1->Room,c2->Room))==0) return 1;
+        if((strcmp(c1->Course,c2->Course) == 0)&&(strcmp(c1->Hour,"*") == 0)&&(strcmp(c1->Day,"*") == 0)&&(strcmp(c1->Room,c2->Room))==0) return 1;
+        if((strcmp(c1->Course,"*") == 0)&&(strcmp(c1->Hour,c2->Hour) == 0)&&(strcmp(c1->Day,"*") == 0)&&(strcmp(c1->Room,c2->Room))==0) return 1;
+        if((strcmp(c1->Course,"*") == 0)&&(strcmp(c1->Hour,"*") == 0)&&(strcmp(c1->Day,"*") == 0)&&(strcmp(c1->Room,c2->Room))==0) return 1;
+        if((strcmp(c1->Course,c2->Course) == 0)&&(strcmp(c1->Day,c2->Day)== 0)&&(strcmp(c1->Hour,c2->Hour) == 0)&&(strcmp(c1->Room,"*"))==0) return 1;
+        if((strcmp(c1->Course,"*") == 0)&&(strcmp(c1->Hour,"*") == 0)&&(strcmp(c1->Day,"*") == 0)&&(strcmp(c1->Room,"*"))==0) return 1;
+        
+    }
+    return 0;
+}
+
 CSG* CSG_new(char* Course, char* StudentId, char* Grade) {
     CSG* new = (CSG*)calloc(1,sizeof(CSG));
     strcpy(new->StudentId, StudentId);
@@ -76,5 +94,14 @@ CR* CR_new(char* Course, char* Room){
     CR* new = (CR*)calloc(1,sizeof(CR));
     strcpy(new->Course, Course);
     strcpy(new->Room, Room);
+    return new;
+}
+
+CRDH* CRDH_new(char* Course, char* Room, char* Day, char* Hour){
+    CRDH* new = (CRDH*)calloc(1,sizeof(CRDH));
+    strcpy(new->Course,Course);
+    strcpy(new->Room,Room);
+    strcpy(new->Day, Day);
+    strcpy(new->Hour, Hour);
     return new;
 }

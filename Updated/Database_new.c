@@ -7,164 +7,162 @@ int hash(int input){
     return input % 1009;
 }
 
-int stringToInt(char* input) {
+int strToInt(char* in) {
     int index = 0;
     for(int i=0; i<6; i++) {
-        index += (int)input[i];
+        index += (int)in[i];
     }
     return index;
 }
 
-void insert_CSG(CSG* tuple, CSGht table) {
+void insert_CSG(CSG* tuple, CSGtb table) {
     int index = hash(strToInt(tuple->StudentId)); //hash on studentID (if no ID, hash on Course)
     if(table[index] == NULL) {
         table[index] = tuple; //if the bucket is empty, just insert
-    } 
+    }
     //if the bucket is not empty, and if the first tuple in it is not a duplicate
     else if(!(strcmp(table[index]->Course, tuple->Course)==0 && strcmp(table[index]->StudentId, tuple->StudentId)==0 && strcmp(table[index]->Grade, tuple->Grade)==0)) {
-        CSG* currentHead = table[index];
+        CSG* current = table[index];
         int match = 0;
-        while(currentHead != NULL) {
+        while(current != NULL) {
             //if a duplicate is found, terminate
-            if(strcmp(currentHead->Course, tuple->Course)==0 && strcmp(currentHead->StudentId, tuple->StudentId)==0 && strcmp(currentHead->Grade, tuple->Grade)==0) {
+            if(strcmp(current->Course, tuple->Course)==0 && strcmp(current->StudentId, tuple->StudentId)==0 && strcmp(current->Grade, tuple->Grade)==0) {
                 match = 1;
                 break;
             } else {
-                currentHead = currentHead->next; //until itself is null
+                current = current->next; //until itself is null
             }
         }
         if(match == 0) {
-            currentHead = tuple; //insert the tuple as the next of the last tuple in the bucket
+            current = tuple; //insert the tuple as the next of the last tuple in the bucket
         }
     }
+    
 }
 
-void insert_SNAP(SNAP* tuple, SNAPht table) {
+void insert_SNAP(SNAP* tuple, SNAPtb table) {
    int index = hash(strToInt(tuple->StudentId));
     if(table[index] == NULL) {
         table[index] = tuple;
-    } 
+    }
     else if(!(strcmp(table[index]->StudentId, tuple->StudentId)==0 && strcmp(table[index]->Name, tuple->Name)==0 && strcmp(table[index]->Address, tuple->Address)==0 && strcmp(table[index]->Phone, tuple->Phone)==0)) {
-        SNAP* currentHead = table[index];
+        SNAP* current = table[index];
         int match = 0;
-        while(currentHead != NULL) {
-            if(strcmp(currentHead->StudentId, tuple->StudentId)==0 && strcmp(currentHead->Name, tuple->Name)==0 && strcmp(currentHead->Address, tuple->Address)==0 && strcmp(currentHead->Phone, tuple->Phone)==0) {
+        while(current != NULL) {
+            if(strcmp(current->StudentId, tuple->StudentId)==0 && strcmp(current->Name, tuple->Name)==0 && strcmp(current->Address, tuple->Address)==0 && strcmp(current->Phone, tuple->Phone)==0) {
                 match = 1;
                 break;
             } else {
-                currentHead = currentHead->next;
+                current = current->next;
             }
         }
         if(match == 0) {
-            currentHead = tuple;
+            current = tuple;
         }
     }
+
 }
 
-void insert_CP(CP* tuple, CPht table) {
+void insert_CP(CP* tuple, CPtb table) {
     int index = hash(strToInt(tuple->Course));
     if(table[index] == NULL) {
         table[index] = tuple;
     } 
     else if(!(strcmp(table[index]->Course, tuple->Course)==0 && strcmp(table[index]->Prerequisite, tuple->Prerequisite)==0)) {
-        CP* currentHead = table[index];
+        CP* current = table[index];
         int match = 0;
-        while(currentHead != NULL) {
-            if(strcmp(currentHead->Course, tuple->Course)==0 && strcmp(currentHead->Prerequisite, tuple->Prerequisite)==0) {
+        while(current != NULL) {
+            if(strcmp(current->Course, tuple->Course)==0 && strcmp(current->Prerequisite, tuple->Prerequisite)==0) {
                 match = 1;
                 break;
             } else{
-                currentHead = currentHead->next;
+                current = current->next;
             }
         }
         if(match == 0) {
-            currentHead = tuple;
+            current = tuple;
         }
     }
 }
 
-void insert_CDH(CDH* tuple, CDHht table) {
+void insert_CDH(CDH* tuple, CDHtb table) {
     int index = hash(strToInt(tuple->Course));
     if(table[index] == NULL) {
         table[index] = tuple;
     } 
     else if(!(strcmp(table[index]->Course, tuple->Course)==0 && strcmp(table[index]->Day, tuple->Day)==0 && strcmp(table[index]->Hour, tuple->Hour)==0)) {
-        CDH* currentHead = table[index];
+        CDH* current = table[index];
         int match = 0;
-        while(currentHead != NULL) {
-            if(strcmp(currentHead->Course, tuple->Course)==0 && strcmp(currentHead->Day, tuple->Day)==0 && strcmp(currentHead->Hour, tuple->Hour)==0) {
+        while(current != NULL) {
+            if(strcmp(current->Course, tuple->Course)==0 && strcmp(current->Day, tuple->Day)==0 && strcmp(current->Hour, tuple->Hour)==0) {
                 match = 1;
                 break;
             } else {
-                currentHead = currentHead->next;
+                current = current->next;
             }
         }
         if(match == 0) {
-            currentHead = tuple;
+            current = tuple;
         }
     }
 }
 
-void insert_CR(CR* tuple, CRht table) {
+void insert_CR(CR* tuple, CRtb table) {
     int index = hash(strToInt(tuple->Course));
     if(table[index] == NULL) {
         table[index] = tuple;
     } 
     else if(!(strcmp(table[index]->Course, tuple->Course)==0 && strcmp(table[index]->Room, tuple->Room)==0)) {
-        CR* currentHead = table[index];
+        CR* current = table[index];
         int match = 0;
-        while(currentHead != NULL) {
-            if(strcmp(currentHead->Course, tuple->Course)==0 && strcmp(currentHead->Room, tuple->Room)==0) {
+        while(current != NULL) {
+            if(strcmp(current->Course, tuple->Course)==0 && strcmp(current->Room, tuple->Room)==0) {
                 match = 1;
                 break;
             } else{
-                currentHead = currentHead->next;
+                current = current->next;
             }
         }
         if(match == 0) {
-            currentHead = tuple;
+            current = tuple;
         }
     }
 }
 
-void delete_CSG(CSG* toDelete,  CSGH CSGHTable){
-    int index = hash(stringToInt(toDelete->StudentId));
+void delete_CSG(CSG* toDelete,  CSGtb table){
+    int index = hash(strToInt(toDelete->StudentId));
 
-    if (CSGHTable[index] == NULL){
+    if (table[index] == NULL){
         return; //Not found
     }
-    //If it's the first in bucket before cycling through
-    if (equal_CSG( toDelete , CSGHTable[index])){
-        CSG* toFree = CSGHTable[index];
-        CSGHTable[index] = CSGHTable[index]->next;
+    if (equal_CSG( toDelete , table[index])){
+        CSG* toFree = table[index];
+        table[index] = table[index]->next;
         free(toFree);
     } else {//Not in first bucket
 
-        for (CSG* temp = CSGHTable[index]; temp != NULL && temp->next != NULL; temp = temp->next){
-            //If we've found the matching entry as temp's next
+        for (CSG* temp = table[index]; temp != NULL && temp->next != NULL; temp = temp->next){
             if (equal_CSG(toDelete, temp->next)){
                 CSG* toFree = temp->next;
-                temp->next = temp->next->next;//passes the deleted node
-                free(toFree);//Free the deleted data
+                temp->next = temp->next->next;//deleted node
+                free(toFree);
             }
         }
     }
 }
 
-void delete_SNAP(SNAP* toDelete,  SNAPH SNAPHTable){
-    int index = hash(stringToInt(toDelete->StudentId));
+void delete_SNAP(SNAP* toDelete,  SNAPtb table){
+    int index = hash(strToInt(toDelete->StudentId));
 
-    if (SNAPHTable[index] == NULL){
+    if (table[index] == NULL){
         return; //Not found
     }
-    //If it's the first in bucket before cycling through
-    if (equal_SNAP( toDelete, SNAPHTable[index])){
-        SNAP* toFree = SNAPHTable[index];
-        SNAPHTable[index] = SNAPHTable[index]->next;
+    if (equal_SNAP( toDelete, table[index])){
+        SNAP* toFree = table[index];
+        table[index] = table[index]->next;
         free(toFree);
     } else {//Not in first bucket
-        for (SNAP* temp = SNAPHTable[index]; temp != NULL && temp->next != NULL; temp = temp->next){
-            //If we've found the matching entry as temp's next
+        for (SNAP* temp = table[index]; temp != NULL && temp->next != NULL; temp = temp->next){
             if (equal_SNAP(toDelete, temp->next)){
                 SNAP* toFree = temp->next;
                 temp->next = temp->next->next;//passes the deleted node
@@ -174,42 +172,40 @@ void delete_SNAP(SNAP* toDelete,  SNAPH SNAPHTable){
     }
 }
 
-void delete_CP(CP* toDelete,  CPH CPHTable){
-    int index = hash(stringToInt(toDelete->Course));
+void delete_CP(CP* toDelete,  CPtb table){
+    int index = hash(strToInt(toDelete->Course));
 
-    if (CPHTable[index] == NULL){
+    if (table[index] == NULL){
         return; //Not found
     }
-    //If it's the first in bucket before cycling through
-    if (equal_CP( toDelete, CPHTable[index])){
-        CP* toFree = CPHTable[index];
-        CPHTable[index] = CPHTable[index]->next;
+    if (equal_CP( toDelete, table[index])){
+        CP* toFree = table[index];
+        table[index] = table[index]->next;
         free(toFree);
     } else {//Not in first bucket
-        for (CP* temp = CPHTable[index]; temp != NULL && temp->next != NULL; temp = temp->next){
-            //If we've found the matching entry as temp's next
+        for (CP* temp = table[index]; temp != NULL && temp->next != NULL; temp = temp->next){
             if (equal_CP(toDelete, temp->next)){
                 CP* toFree = temp->next;
                 temp->next = temp->next->next;//passes the deleted node
-                free(toFree);//Free the deleted data
+                free(toFree);
             }
         }
     }
 }
 
-void delete_CDH(CDH* toDelete,  CDHH CDHHTable){
-    int index = hash(stringToInt(toDelete->Course));
+void delete_CDH(CDH* toDelete, CDHtb table){
+    int index = hash(strToInt(toDelete->Course));
 
-    if (CDHHTable[index] == NULL){
+    if (table[index] == NULL){
         return; //Not found
     }
     //If it's the first in bucket before cycling through
-    if (equal_CDH( toDelete,CDHHTable[index])){
-        CDH* toFree = CDHHTable[index];
-        CDHHTable[index] = CDHHTable[index]->next;
+    if (equal_CDH( toDelete,table[index])){
+        CDH* toFree = table[index];
+        table[index] = table[index]->next;
         free(toFree);
     } else {//Not in first bucket
-        for (CDH* temp = CDHHTable[index]; temp != NULL && temp->next != NULL; temp = temp->next){
+        for (CDH* temp = table[index]; temp != NULL && temp->next != NULL; temp = temp->next){
             //If we've found the matching entry as temp's next
             if (equal_CDH(toDelete, temp->next)){
                 CDH* toFree = temp->next;
@@ -220,18 +216,18 @@ void delete_CDH(CDH* toDelete,  CDHH CDHHTable){
     }
 }
 
-void delete_CR(CR* toDelete,  CRH CRHTable){
-    int index = hash(stringToInt(toDelete->Course));
+void delete_CR(CR* toDelete,  CRtb table){
+    int index = hash(strToInt(toDelete->Course));
 
-    if (CRHTable[index] == NULL){
+    if (table[index] == NULL){
         return; //Not found
     }
-    if (equal_CR(toDelete ,CRHTable[index])){
-        CR* toFree = CRHTable[index];
-        CRHTable[index] = CRHTable[index]->next;
+    if (equal_CR(toDelete ,table[index])){
+        CR* toFree = table[index];
+        table[index] = table[index]->next;
         free(toFree);
     } else {//Not in first bucket
-        for (CR* temp = CRHTable[index]; temp != NULL && temp->next != NULL; temp = temp->next){
+        for (CR* temp = table[index]; temp != NULL && temp->next != NULL; temp = temp->next){
             //If we've found the matching entry as temp's next
             if (equal_CR(toDelete, temp->next)){
                 CR* toFree = temp->next;
@@ -243,15 +239,15 @@ void delete_CR(CR* toDelete,  CRH CRHTable){
 }
 
 
-CSG** lookup_CSG(CSG* toLookup, CSGH CSGHTable)
+CSG** lookup_CSG(CSG* tuple, CSGtb table)
 {
-    //  int index = hash(stringToInt(toLookup->StudentId));
+    //  int index = hash(strToInt(tuple->StudentId));
     CSG** List = (CSG**)calloc(1009,sizeof(CSG*));
     int i = 0;//index pointers in double pointer
     for(int j = 0;j<1009;j++){
-        if(CSGHTable[j]!=NULL){
-            for (CSG* temp = CSGHTable[j]; temp != NULL; temp = temp->next){
-                if (equal_CSG(toLookup, temp)) {//If we've found the matching entry as temp's next
+        if(table[j]!=NULL){
+            for (CSG* temp = table[j]; temp != NULL; temp = temp->next){
+                if (equal_CSG(tuple, temp)) {//If we've found the matching entry as temp's next
                     List[i] = temp;
                     i++;
                 }
@@ -262,64 +258,67 @@ CSG** lookup_CSG(CSG* toLookup, CSGH CSGHTable)
     return List;
 }
 
-SNAP** lookup_SNAP(SNAP* toLookup, SNAPH SNAPHTable)
+SNAP** lookup_SNAP(SNAP* tuple, SNAPtb table)
 {
-    //int index = hash(stringToInt(toLookup->StudentId));
+    //int index = hash(strToInt(tuple->StudentId));
     SNAP** List = (SNAP**)calloc(1009,sizeof(SNAP*));
     int i = 0;//index pointers in double pointer
     for(int j = 0;j<1009;j++){
-        if(SNAPHTable[j]!=NULL){
+        if(table[j]!=NULL){
 
-            for (SNAP* temp = SNAPHTable[j]; temp != NULL; temp = temp->next){
-                if (equal_SNAP(toLookup, temp)){//If we've found the matching entry as temp's next
+            for (SNAP* temp = table[j]; temp != NULL; temp = temp->next){
+                if (equal_SNAP(tuple, temp)){//If we've found the matching entry as temp's next
                     List[i] = temp;
                     i++;
                 }
             }
         }
     }
-    if (List[0] == NULL) return NULL;
+    if (List[0] == NULL)
+        return NULL;
     return List;
 }
 
-CP** lookup_CP(CP* toLookup, CPH CPHTable)
+CP** lookup_CP(CP* tuple, CPtb table)
 {
     CP** List = (CP**)calloc(1009,sizeof(CP*));
     int i = 0;//index pointers in double pointer
     for(int j = 0;j<1009;j++){
-        if(CPHTable[j]!=NULL){
-            for (CP* temp = CPHTable[j]; temp != NULL; temp = temp->next){
-                if (equal_CP(toLookup, temp)) {//If we've found the matching entry as temp's next
+        if(table[j]!=NULL){
+            for (CP* temp = table[j]; temp != NULL; temp = temp->next){
+                if (equal_CP(tuple, temp)) {//If we've found the matching entry as temp's next
                     List[i] = temp;
                     i++;
                 }
             }
         }
     }
-    if (List[0] == NULL) return NULL;
+    if (List[0] == NULL)
+        return NULL;
     return List;
 }
 
-CDH** lookup_CDH(CDH* toLookup, CDHH CDHHTable)
+CDH** lookup_CDH(CDH* tuple, CDHtb table)
 {
-    //int index = hash(stringToInt(toLookup->Course));
+    //int index = hash(strToInt(tuple->Course));
     CDH** List = (CDH**)calloc(1009,sizeof(CDH*));
     int i = 0;//index pointers in double pointer
     for(int j = 0;j<1009;j++){
-        if(CDHHTable[j]!=NULL){
-            for (CDH* temp = CDHHTable[j]; temp != NULL; temp = temp->next){
-                if (equal_CDH(toLookup, temp)){//If we've found the matching entry as temp's next
+        if(table[j]!=NULL){
+            for (CDH* temp = table[j]; temp != NULL; temp = temp->next){
+                if (equal_CDH(tuple, temp)){//If we've found the matching entry as temp's next
                     List[i] = temp;
                     i++;
                 }
             }
         }
     }
-    if (List[0] == NULL) return NULL;
+    if (List[0] == NULL)
+        return NULL;
     return List;
 }
 
-CR** lookup_CR(CR* toLookup, CRH CRHTable)
+CR** lookup_CR(CR* tuple, CRtb table)
 {
     int i = 0;//index pointers in double pointer
     CR** List = (CR**)calloc(1009,sizeof(CR*));
@@ -327,9 +326,9 @@ CR** lookup_CR(CR* toLookup, CRH CRHTable)
         List[i] = NULL;
     }
     for(int j = 0;j<1009;j++){
-        if(CRHTable[j]!=NULL){
-            for (CR* temp = CRHTable[j]; temp != NULL; temp = temp->next){
-                if (equal_CR(toLookup, temp)){//If we've found the matching entry as temp's next
+        if(table[j]!=NULL){
+            for (CR* temp = table[j]; temp != NULL; temp = temp->next){
+                if (equal_CR(tuple, temp)){//If we've found the matching entry as temp's next
                     // printf("%s\n",temp->Course);
                     List[i] = temp;
                     i++;
@@ -337,29 +336,30 @@ CR** lookup_CR(CR* toLookup, CRH CRHTable)
             }
         }
     }
-    if (List[0] == NULL) return NULL;
+    if (List[0] == NULL)
+        return NULL;
     return List;
 }
 
-void print_CSG(CSGLIST* csglist){
+void print_CSG(CSGptr* csglist){
     int i = 0;
     while (csglist[i] != NULL) {
-        String Course = csglist[i]->Course;
-        String StudentID= csglist[i]->StudentId;
-        String Grade = csglist[i]->Grade;
+        char* Course = csglist[i]->Course;
+        char* StudentID= csglist[i]->StudentId;
+        char* Grade = csglist[i]->Grade;
         printf("%s\n", Course);
         printf("%s\n",StudentID);
         printf("%s\n", Grade);
         i++;
     }
 }
-void print_SNAP(SNAPLIST* snaplist){
+void print_SNAP(SNAPptr* snaplist){
     int i = 0;
     while (snaplist[i] != NULL) {
-        String Name = snaplist[i]->Name;
-        String StudentID= snaplist[i]->StudentId;
-        String Phone = snaplist[i]->Phone;
-        String Address = snaplist[i]->Address;
+        char* Name = snaplist[i]->Name;
+        char* StudentID= snaplist[i]->StudentId;
+        char* Phone = snaplist[i]->Phone;
+        char* Address = snaplist[i]->Address;
         printf("%s\n",StudentID);
         printf("%s\n", Name);
         printf("%s\n", Address);
@@ -368,12 +368,12 @@ void print_SNAP(SNAPLIST* snaplist){
     }
 }
 
-void print_CP(CPLIST* cplist){
+void print_CP(CPptr* cplist){
     if (cplist){
         int i = 0;
         while (cplist[i] != NULL) {
-            String Course = cplist[i]->Course;
-            String Prerequisite = cplist[i]->Prerequisite;
+            char* Course = cplist[i]->Course;
+            char* Prerequisite = cplist[i]->Prerequisite;
             printf("%s\n", Course);
             printf("%s\n",Prerequisite);
             printf("\n");
@@ -381,28 +381,28 @@ void print_CP(CPLIST* cplist){
         }
     }
     else {
-        printf("FALSE: CPEMPTY\n");
+        printf("Empty CP\n");
     }
 }
 
-void print_CDH(CDHLIST* cdhlist){
+void print_CDH(CDHptr* cdhlist){
     int i = 0;
     while (cdhlist[i] != NULL) {
-        String Course = cdhlist[i]->Course;
-        String Day= cdhlist[i]->Day;
-        String Hour = cdhlist[i]->Hour;
+        char* Course = cdhlist[i]->Course;
+        char* Day= cdhlist[i]->Day;
+        char* Hour = cdhlist[i]->Hour;
         printf("%s\n", Course);
         printf("%s\n",Day);
         printf("%s\n",Hour);
         i++;
     }
 }
-void print_CR(CRLIST* crlist){
+void print_CR(CRptr* crlist){
     if (crlist){
         int i = 0;
         while (crlist[i]) {
-            String Course = crlist[i]->Course;
-            String Room = crlist[i]->Room;
+            char* Course = crlist[i]->Course;
+            char* Room = crlist[i]->Room;
             printf("%s\n", Course);
             printf("%s\n", Room);
             printf("\n");
@@ -410,78 +410,94 @@ void print_CR(CRLIST* crlist){
         }
     }
     else {
-        printf("CREMPTY");
+        printf("Empty CR");
     }
 }
-
-//find grade for part 2
-void findGrade(String Name, String Course, SNAPH snaptable, CSGH csgtable){
-    SNAPLIST* list1 = lookup_SNAP(SNAP_new("*", Name, "*", "*"), snaptable);
-    int i = 0 ;
-    while(list1[i] != NULL && i <1009){
-
-        String id = list1[i]->StudentId;
-        CSGLIST* list2 = lookup_CSG(CSG_new("*", id, "*"), csgtable);
-        int j = 0;
-        while(list2[j] != NULL && j <1009) {
-            if(strcmp(list2[j]->Course,Course) == 0){
-                printf("Grade :");
-                printf("%s\n", list2[j]->Grade);
+void print_CRDH(CRDHptr* crdhlist){
+    if (crdhlist){
+        int i =0;
+        while (crdhlist[i]){
+            char* Course = crdhlist[i]->Course;
+            char* Room = crdhlist[i]->Room;
+            char* Day = crdhlist[i]->Day;
+            char* Hour = crdhlist[i]->Hour;
+            printf("%s\n", Course);
+            printf("%s\n", Room);
+            printf("%s\n", Day);
+            printf("%s\n", Hour);
+            printf("\n");
+            i++;
+        }
+    }
+    else {
+        printf("Empty CRDH");
+    }
+}
+void getGrade(char* name, char* course, CSGtb csgtable, SNAPtb snaptable){
+    SNAPptr* snap = lookup_SNAP(SNAP_new("*", name, "*", "*"), snaptable);
+    int i = 0;
+    while(snap[i] != NULL && i <1009){
+        char* id = snap[i]->StudentId;
+        CSGptr* csg = lookup_CSG(CSG_new("*", id, "*"), csgtable);
+        int j=0;
+        while(csg[j] != NULL && j <1009) {
+            if(strcmp(csg[j]->Course,course) == 0){
+                printf("Grade: %s\n", csg[j]->Grade);
             }
             j++;
         }
-//        free(id);
-        free(list2);
+        free(csg);
         i++;
     }
-    free(list1);
+    free(snap);
 }
 
-//find location for part 2
-void findRoom(String Name, String Hour, String Day, SNAPH snaptable, CSGH csgtable, CDHH cdhtable, CRH crtable){
-    SNAPLIST* list1 = lookup_SNAP(SNAP_new("*", Name, "*", "*"), snaptable);
-    int i = 0 ;
-    while(list1[i] != NULL && i <1009){
-        String id = list1[i]->StudentId;
-        // printf("%s\n", id);
-        CSGLIST* list2 = lookup_CSG(CSG_new("*", id, "*"), csgtable);
-        int j = 0;
-        while(list2[j] != NULL && j <1009) {
-            String course = list2[j]->Course;
-            CDHLIST* list3 = lookup_CDH(CDH_new(course, Day, Hour), cdhtable);
-            int k = 0;
-            if(list3==NULL){j++; continue;}
-            while(list3[k] != NULL && k <1009) {
-                // printf("%s\n", course);
-                CRLIST* list4 = lookup_CR(CR_new(course, "*"), crtable);
-                int l = 0;
-                while(list3[l] != NULL && l <1009){
-                    if(list4==NULL){l++; continue;}
-                    printf("Room :");
-                    printf("%s\n", list4[l]->Room);
-                    //  printf("%d\n",l);
+void getRoom(char* name, char* hour, char* day, CSGtb csgtable, SNAPtb snaptable, CDHtb cdhtable, CRtb crtable){
+    SNAPptr* snap = lookup_SNAP(SNAP_new("*", name, "*", "*"), snaptable);
+    int i=0;
+    while(snap[i] != NULL && i <1009){
+        char* id = snap[i]->StudentId;
+        CSGptr* csg = lookup_CSG(CSG_new("*", id, "*"), csgtable);
+        int j=0;
+        while(csg[j] != NULL && j <1009) {
+            char* course = csg[j]->Course;
+            CDHptr* cdh = lookup_CDH(CDH_new(course, day, hour), cdhtable);
+            if(cdh == NULL){
+                j++;
+                continue;
+            }
+            int k=0;
+            while(cdh[k] != NULL && k <1009) {
+                CRptr* cr = lookup_CR(CR_new(course, "*"), crtable);
+                int l=0;
+                while(cdh[l] != NULL && l <1009){
+                    if(cr==NULL){
+                        l++;
+                        continue;
+                    }
+                    printf("Room: %s\n", cr[l]->Room);
                     l++;
                 }
-                free(list4);
+                free(cr);
                 k++;
             }
-            free(list3);
+            free(cdh);
             j++;
         }
         free(id);
-        free(list2);
+        free(csg);
         i++;
     }
-    free(list1);
+    free(snap);
 }
 
 
-//part 3 : Select function for CORSE on CSG structs
-CSG** select_CSG(CSGH CSGHTable, char* course){
+//Part3
+CSG** select_CSG(CSGtb table, char* course){
     CSG** sCSG = (CSG**)calloc(1009, sizeof(CSG*));
     int CSGIndex = 0;
     for(int i = 0; i < 1009; i++){
-        for (CSG* temp = CSGHTable[i]; temp != NULL; temp = temp->next){
+        for (CSG* temp = table[i]; temp != NULL; temp = temp->next){
             if(strcmp(temp->Course,course)==0){
                 sCSG[CSGIndex] = temp;
                 CSGIndex++;
@@ -491,13 +507,70 @@ CSG** select_CSG(CSGH CSGHTable, char* course){
     return sCSG;
 }
 
+CRDH** join_CR_CDH (CRtb table, CDHtb table1){
+    int index = 0;
+    CRDH** sCRDH = (CRDH**)calloc(1009,sizeof(CRDH*));
+    for(int i = 0; i < 1009; i++){
+        if(table[i] != NULL){
+            for (int j = 0; j < 1009; j++){
+                if (table1[j] != NULL){
+                    if(strcmp(table[i]->Course, table1[j]->Course) == 0){
+                        CRDH* add = CRDH_new(table[i]->Course,table[i]->Room,table1[j]->Day,table1[j]->Hour);
+                        int found = 0;
+                        for (int m = 0; m < 1009 && found == 0; m++ ){
+                            if (sCRDH[m] != NULL && equal_CRDH(sCRDH[m],add)){
+                                found = 1;
+                            }
+                        }
+                        if (!found){
+                            sCRDH[index] = add;
+                            index ++;
+                        }else free(add);
+                    }
+                }
+            }
+        }
+    }
+    if (sCRDH == NULL) {
+        return NULL;
+    }else return sCRDH;
+}
+
+void projection_CSG(CSG** csg) {
+    int i = 0;
+    while(csg[i] != NULL) {
+        printf("%s\n", csg[i]->StudentId);
+        i++;
+    }
+}
 
 
 int main() {
-    CSGH csgtable ;
+    CSGtb csgtable ;
     for(int i=0; i<1009; i++){
         csgtable[i]=NULL;
     }
+    
+    SNAPtb snaptable;
+    for(int i=0; i<1009; i++){
+        snaptable[i]=NULL;
+    }
+    
+    CPtb cptable;
+    for(int i=0; i<1009; i++){
+        cptable[i]=NULL;
+    }
+    
+    CDHtb cdhtable;
+    for(int i=0; i<1009; i++){
+        cdhtable[i]=NULL;
+    }
+    
+    CRtb crtable;
+    for(int i=0; i<1009; i++){
+        crtable[i]=NULL;
+    }
+    
     insert_CSG( CSG_new("CS101", "12345", "A") , csgtable);
     insert_CSG( CSG_new("CS101", "67890", "B") , csgtable);
     insert_CSG( CSG_new("EE200", "12345", "C") , csgtable);
@@ -505,18 +578,10 @@ int main() {
     insert_CSG( CSG_new("CS101", "33333", "A-") , csgtable);
     insert_CSG( CSG_new("PH100", "67890", "C+") , csgtable);
 
-    SNAPH snaptable;
-    for(int i=0; i<1009; i++){
-        snaptable[i]=NULL;
-    }
     insert_SNAP( SNAP_new("12345", "C.Brown", "12 Apple St.","555-1234"),  snaptable);
     insert_SNAP( SNAP_new("67890", "L.Van Pelt", "34 Pear Ave.","555-5678"),  snaptable);
     insert_SNAP( SNAP_new("22222", "P.Patty", "56 Grape Blvd.","555-9999"),  snaptable);
 
-    CPH cptable;
-    for(int i=0; i<1009; i++){
-        cptable[i]=NULL;
-    }
     insert_CP( CP_new("CS101", "CS100"), cptable);
     insert_CP( CP_new("EE200", "EE005"), cptable);
     insert_CP( CP_new("EE200", "CS100"), cptable);
@@ -526,10 +591,6 @@ int main() {
     insert_CP( CP_new("CS206", "CS121"), cptable);
     insert_CP( CP_new("CS206", "CS205"), cptable);
 
-    CDHH cdhtable;
-    for(int i=0; i<1009; i++){
-        cdhtable[i]=NULL;
-    }
     insert_CDH( CDH_new("CS101", "M", "9AM"),  cdhtable);
     insert_CDH( CDH_new("CS101", "W", "9AM"),  cdhtable);
     insert_CDH( CDH_new("CS101", "F", "9AM"),  cdhtable);
@@ -537,51 +598,53 @@ int main() {
     insert_CDH( CDH_new("EE200", "W", "1PM"),  cdhtable);
     insert_CDH( CDH_new("EE200", "Th", "10AM"),  cdhtable);
 
-    CRH crtable;
-    for(int i=0; i<1009; i++){
-        crtable[i]=NULL;
-    }
     insert_CR( CR_new("CS101", "Turing Aud."), crtable);
     insert_CR( CR_new("EE200", "25 Ohm Hall"), crtable);
     insert_CR( CR_new("PH100", "Newton Lab."), crtable);
 
-
-
-    //example 8.2
-    CSGLIST* csglist = lookup_CSG(CSG_new("CS101", "12345", "*"), csgtable);//a
-    CPLIST* cplist = lookup_CP(CP_new("CSC205", "CS120"), cptable);//b
-    delete_CR(CR_new("CS101", "*"), crtable);//c
-    CRLIST* crlist = lookup_CR(CR_new("*", "*"), crtable);
-    insert_CP(CP_new("CS205", "CS120"), cptable);//d
-    insert_CP(CP_new("CS205", "CS101"), cptable);//e
-    CPLIST* cplist2 = lookup_CP(CP_new("CS205", "*"), cptable);
+    //eg 8.2
+    CSGptr* csglist = lookup_CSG(CSG_new("CS101", "12345", "*"), csgtable);
+    CPptr* cplist = lookup_CP(CP_new("CSC205", "CS120"), cptable);
+    delete_CR(CR_new("CS101", "*"), crtable);
+    CRptr* crlist = lookup_CR(CR_new("*", "*"), crtable);
+    insert_CP(CP_new("CS205", "CS120"), cptable);
+    insert_CP(CP_new("CS205", "CS101"), cptable);
+    CPptr* cplist1 = lookup_CP(CP_new("CS205", "*"), cptable);
     insert_CR( CR_new("CS101", "Turing Aud."), crtable);
 
-    CSGLIST* csglist2 = select_CSG(csgtable, "CS101");
 
-
-    printf("Part I \n");
-    printf("Find the tuple that shows the grade of the student with ID 12345 in CS101: \n");
+    printf("********************Part I********************\n");
+    printf("1) Find the grade of the student with ID 12345 in CS101: \n");
     print_CSG(csglist);
     printf("\n");
-    printf("Whether CS120 is a prerequisite of CS205: \n");
+    printf("2) Whether CS120 is a prerequisite of CS205: \n");
     print_CP(cplist);
     printf("\n");
-    printf("Drop the first tuple(CS101,*) of CR, show the remaining tuples: \n");
+    printf("3) Drop the first tuple(CS101,*) from 8.2(d), show the remaining tuples: \n");
     print_CR(crlist);
     printf("\n");
-    printf("Make CS120 a prerequisite of CS205 and insert tuple (CS205,CS101) which already exists in CP, show the tuples starts with CS205 afterwards: \n");
-    print_CP(cplist2);
-    //printf("%d\n",equal_CDH(CDH_new("CS101", "*", "*"), CDH_new("CS101", "M", "9PM")));
+    printf("4) Make CS120 a prerequisite of CS205 and insert tuple (CS205,CS101) in CP, and then show the tuples starts with CS205: \n");
+    print_CP(cplist1);
+    
+    printf("********************Part II******************** \n");
+    printf("What grade did P.Patty get in EE200?\n");
+//    getGrade("P.Patty", "EE200", csgtable, snaptable);
+    printf("\n");
+    printf("Where is L.Van Pelt at 9AM on W?\n");
+//    getRoom("L.Van Pelt", "9AM", "W", csgtable, snaptable, cdhtable, crtable);
+    printf("\n");
 
-    printf("Part II \n");
-    printf("What grade did StudentName=P.Patty get in CourseName=EE200 ?: \n");
-    findGrade("P.Patty", "EE200", snaptable, csgtable);
-    printf("\n");
-    printf("Where is StudentName=L.Van Pelt at Time=9AM on Day=W ?: \n");
-    findRoom("L.Van Pelt", "9AM", "W", snaptable, csgtable, cdhtable, crtable);
-    printf("\n");
-    printf("Part III \n");
-    printf("Select CourseName= CS101 From CSG: \n");
+    //example 8.12
+    CSGptr* csglist2 = select_CSG(csgtable, "CS101");
+    
+    //example 8.14
+    CRDHptr* crdhlist = join_CR_CDH(crtable, cdhtable);
+
+    printf("********************Part III******************** \n");
+    printf("Example 8.12: Select 'CS101' from CSG: \n");
     print_CSG(csglist2);
+    printf("Examplep 8.13: Project only StudentId for those taking CSC101 \n");
+    projection_CSG(csglist2);
+    printf("Example 8.14: Join CR and CDH on Course = Course \n");
+    print_CRDH(crdhlist);
 }
